@@ -1,23 +1,40 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Página para aprender Geometría Basica con Processing</title>
+    <meta
+      name="description"
+      content="geometría básica con processing, aprender geometría básica con processing, geometría básica, geometría con processing, aprender geometría con processing"
+    />
+    <meta
+      name="keywords"
+      content="geometría básica, geometría con processing, aprender geometría con processing"
+    />
+    <meta name="author" content="Javier Martín" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index,follow" />
+    <meta name="bingbot" content="index,follow" />
+    <meta name="yandexbot" content="index,follow" />
+  </head>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+<body>
+  <slot />
+</body>
+
+<style is:global>
+  @import "tailwindcss";
+  @import "tailwind-animations";
+  body {
+    background: #000;
+  }
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
 </style>

@@ -1,0 +1,44 @@
+---
+interface Props {
+  prev: { section: { slug: string }; lesson: { slug: string; title: string } } | null;
+  next: { section: { slug: string }; lesson: { slug: string; title: string } } | null;
+}
+
+const { prev, next } = Astro.props;
+---
+
+<nav class="flex justify-between items-center mt-12 pt-6 border-t border-white/[0.06]">
+  {prev ? (
+    <a
+      href={`/clase/${prev.section.slug}/${prev.lesson.slug}`}
+      class="flex items-center gap-2 text-white/60 hover:text-blue-400 transition-colors group max-w-[45%]"
+    >
+      <svg class="w-5 h-5 group-hover:-translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+      <div class="flex flex-col">
+        <span class="text-xs text-white/40">Anterior</span>
+        <span class="text-sm truncate">{prev.lesson.title}</span>
+      </div>
+    </a>
+  ) : (
+    <div></div>
+  )}
+
+  {next ? (
+    <a
+      href={`/clase/${next.section.slug}/${next.lesson.slug}`}
+      class="flex items-center gap-2 text-white/60 hover:text-blue-400 transition-colors group max-w-[45%]"
+    >
+      <div class="flex flex-col text-right">
+        <span class="text-xs text-white/40">Siguiente</span>
+        <span class="text-sm truncate">{next.lesson.title}</span>
+      </div>
+      <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </a>
+  ) : (
+    <div></div>
+  )}
+</nav>

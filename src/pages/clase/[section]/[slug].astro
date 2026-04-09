@@ -1,0 +1,62 @@
+---
+import LessonNavigation from '../../../components/course/LessonNavigation.astro';
+import { courseData, getAdjacentLessons } from '../../../data/courseData';
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../sections/Header.astro';
+
+export function getStaticPaths() {
+  const paths: { params: { section: string; slug: string }; props: { lesson: any; section: any } }[] = [];
+
+  courseData.forEach((section) => {
+    section.lessons.forEach((lesson) => {
+      paths.push({
+        params: { section: section.slug, slug: lesson.slug },
+        props: { lesson, section },
+      });
+    });
+  });
+
+  return paths;
+}
+
+const { section, slug } = Astro.params;
+const { lesson } = Astro.props;
+const { prev, next } = getAdjacentLessons(section, slug);
+---
+
+<Layout title={`${lesson.title} | Aprende Processing`}>
+  <Header />
+
+  <main class="max-w-3xl mx-auto px-6 py-12">
+    <header class="mb-8">
+      <a href="/" class="inline-flex items-center gap-1.5 text-blue-400/60 text-sm hover:text-blue-400 transition-colors mb-4">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Volver al curso
+      </a>
+
+      <div class="flex items-center gap-2 text-sm text-white/40 mb-2">
+        <span>{section.number}</span>
+        <span>·</span>
+        <span>{section.title}</span>
+      </div>
+
+      <h1 class="text-3xl md:text-4xl font-bold text-white">{lesson.title}</h1>
+    </header>
+
+    <article class="prose prose-invert prose-blue max-w-none
+      prose-headings:text-white prose-headings:font-bold
+      prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
+      prose-p:text-white/70 prose-p:leading-relaxed
+      prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
+      prose-code:bg-white/[0.06] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-blue-300
+      prose-pre:bg-white/[0.03] prose-pre:border prose-pre:border-white/[0.06] prose-pre:rounded-lg
+      prose-ul:text-white/70 prose-ol:text-white/70
+    ">
+      <Fragment set:html={lesson.content} />
+    </article>
+
+    <LessonNavigation prev={prev} next={next} />
+  </main>
+</Layout>
