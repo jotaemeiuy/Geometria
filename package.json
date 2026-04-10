@@ -12,12 +12,12 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.2.2",
+    "@tailwindcss/vite": "4.2.2",
     "astro": "6.1.5",
-    "tailwind-animations": "^1.0.1",
-    "tailwindcss": "^4.2.2"
+    "tailwind-animations": "1.0.1",
+    "tailwindcss": "4.2.2"
   },
   "devDependencies": {
-    "@astrojs/vercel": "^10.0.4"
+    "@astrojs/vercel": "10.0.4"
   }
 }
