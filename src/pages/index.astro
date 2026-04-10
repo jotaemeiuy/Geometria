@@ -11,7 +11,7 @@ import Hero from "../sections/Hero.astro";
   <Hero />
 
   <main class="max-w-6xl mx-auto px-6 py-12">
-    <section class="grid gap-8 lg:grid-cols-[1.4fr_1fr] items-start mb-14">
+    <section class="mb-14">
       <div
         class="rounded-4xl border border-white/10 bg-slate-950/70 p-8 shadow-[0_30px_80px_rgba(15,23,42,0.35)]"
       >
@@ -22,7 +22,7 @@ import Hero from "../sections/Hero.astro";
           Curso práctico y visual
         </span>
         <h2 class="text-3xl font-bold text-white mb-4">
-          Así aprenderás Geometry con p5.js.
+          Así aprenderás Geometría con p5.js.
         </h2>
         <p class="text-white/70 leading-relaxed mb-6">
           Cada capítulo combina teoría ligera, ejemplos concretos y ejercicios
@@ -67,38 +67,6 @@ import Hero from "../sections/Hero.astro";
               sin complicarse.
             </p>
           </div>
-        </div>
-      </div>
-
-      <div
-        class="rounded-4xl border border-white/10 bg-slate-950/70 p-8 shadow-[0_30px_80px_rgba(15,23,42,0.35)]"
-      >
-        <h3 class="text-xl font-bold text-white mb-4">Contenido del curso</h3>
-        <p class="text-white/70 mb-6">
-          Explora las cuatro grandes secciones del curso y abre la lección que
-          quieras estudiar.
-        </p>
-        <div class="space-y-4">
-          {
-            courseData.map((section) => (
-              <div class="rounded-3xl border border-white/10 bg-slate-900/80 p-5">
-                <div class="flex items-center justify-between gap-4 mb-3">
-                  <div>
-                    <p class="text-xs uppercase tracking-[0.3em] text-white/40">
-                      Sección {section.number}
-                    </p>
-                    <h4 class="text-lg font-semibold text-white">
-                      {section.title}
-                    </h4>
-                  </div>
-                  <span class="rounded-full bg-white/5 px-3 py-1 text-xs text-white/60">
-                    {section.lessons.length} lecciones
-                  </span>
-                </div>
-                <p class="text-sm text-white/60">{section.description}</p>
-              </div>
-            ))
-          }
         </div>
       </div>
     </section>
