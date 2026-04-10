@@ -11,12 +11,159 @@ import Hero from "../sections/Hero.astro";
   <Hero />
 
   <main class="max-w-6xl mx-auto px-6 py-12">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <section class="grid gap-8 lg:grid-cols-[1.4fr_1fr] items-start mb-14">
+      <div
+        class="rounded-4xl border border-white/10 bg-slate-950/70 p-8 shadow-[0_30px_80px_rgba(15,23,42,0.35)]"
+      >
+        <span
+          class="inline-flex items-center gap-2 rounded-full bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-200 mb-4"
+        >
+          <span class="h-2 w-2 rounded-full bg-blue-300"></span>
+          Curso práctico y visual
+        </span>
+        <h2 class="text-3xl font-bold text-white mb-4">
+          Así aprenderás Geometry con p5.js.
+        </h2>
+        <p class="text-white/70 leading-relaxed mb-6">
+          Cada capítulo combina teoría ligera, ejemplos concretos y ejercicios
+          guiados para que avances con confianza. Ideal si quieres crear
+          gráficos, animaciones y programas interactivos.
+        </p>
+
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div class="rounded-3xl border border-white/10 bg-slate-900/80 p-5">
+            <p class="text-sm uppercase tracking-[0.25em] text-white/40 mb-3">
+              Paso a paso
+            </p>
+            <p class="text-white/80">
+              Sigue lecciones cortas y prácticas, sin saltos bruscos ni teoría
+              densa.
+            </p>
+          </div>
+          <div class="rounded-3xl border border-white/10 bg-slate-900/80 p-5">
+            <p class="text-sm uppercase tracking-[0.25em] text-white/40 mb-3">
+              Aprende haciendo
+            </p>
+            <p class="text-white/80">
+              Cada lección incluye un ejemplo real en p5.js que puedes modificar
+              al instante en el navegador.
+            </p>
+          </div>
+          <div class="rounded-3xl border border-white/10 bg-slate-900/80 p-5">
+            <p class="text-sm uppercase tracking-[0.25em] text-white/40 mb-3">
+              Progreso visible
+            </p>
+            <p class="text-white/80">
+              Sabrás siempre qué capítulo vienes y qué sigue después, con
+              navegación clara.
+            </p>
+          </div>
+          <div class="rounded-3xl border border-white/10 bg-slate-900/80 p-5">
+            <p class="text-sm uppercase tracking-[0.25em] text-white/40 mb-3">
+              Orientado a estudiantes
+            </p>
+            <p class="text-white/80">
+              Diseñado para quienes quieran aprender geometría y programación
+              sin complicarse.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="rounded-4xl border border-white/10 bg-slate-950/70 p-8 shadow-[0_30px_80px_rgba(15,23,42,0.35)]"
+      >
+        <div class="mb-6 pb-6 border-b border-white/10">
+          <div class="flex items-center justify-between mb-2">
+            <h3
+              class="text-sm font-semibold text-white/80 uppercase tracking-wider"
+            >
+              Tu progreso
+            </h3>
+            <span
+              id="global-progress-text"
+              class="text-sm font-medium text-blue-400">0%</span
+            >
+          </div>
+          <div class="h-2 w-full rounded-full bg-white/10 overflow-hidden">
+            <div
+              id="global-progress-bar"
+              class="h-full rounded-full bg-linear-to-r from-blue-400 via-sky-400 to-cyan-300 transition-all duration-500"
+              style="width: 0%"
+            >
+            </div>
+          </div>
+          <p id="global-progress-detail" class="text-xs text-white/50 mt-2">
+            0 de 10 lecciones completadas
+          </p>
+        </div>
+
+        <h3 class="text-xl font-bold text-white mb-4">Contenido del curso</h3>
+        <p class="text-white/70 mb-6">
+          Explora las cuatro grandes secciones del curso y abre la lección que
+          quieras estudiar.
+        </p>
+        <div class="space-y-4">
+          {
+            courseData.map((section) => (
+              <div class="rounded-3xl border border-white/10 bg-slate-900/80 p-5">
+                <div class="flex items-center justify-between gap-4 mb-3">
+                  <div>
+                    <p class="text-xs uppercase tracking-[0.3em] text-white/40">
+                      Sección {section.number}
+                    </p>
+                    <h4 class="text-lg font-semibold text-white">
+                      {section.title}
+                    </h4>
+                  </div>
+                  <span class="rounded-full bg-white/5 px-3 py-1 text-xs text-white/60">
+                    {section.lessons.length} lecciones
+                  </span>
+                </div>
+                <p class="text-sm text-white/60">{section.description}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="contenido"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+    >
       {
         courseData.map((section, index) => (
           <CourseSection section={section} index={index} />
         ))
       }
-    </div>
+    </section>
   </main>
 </Layout>
+
+<script>
+  import { getCompletedCount, getProgressPercentage } from "../utils/progress";
+  import { courseData } from "../data/courseData";
+
+  const totalLessons = courseData.reduce(
+    (acc, section) => acc + section.lessons.length,
+    0,
+  );
+
+  function updateGlobalProgress() {
+    const completed = getCompletedCount();
+    const percentage = getProgressPercentage(totalLessons);
+
+    const progressBar = document.getElementById("global-progress-bar");
+    const progressText = document.getElementById("global-progress-text");
+    const progressDetail = document.getElementById("global-progress-detail");
+
+    if (progressBar) progressBar.style.width = `${percentage}%`;
+    if (progressText) progressText.textContent = `${percentage}%`;
+    if (progressDetail)
+      progressDetail.textContent = `${completed} de ${totalLessons} lecciones completadas`;
+  }
+
+  updateGlobalProgress();
+  window.addEventListener("progress-updated", updateGlobalProgress);
+</script>

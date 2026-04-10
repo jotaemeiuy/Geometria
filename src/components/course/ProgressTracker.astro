@@ -1,0 +1,112 @@
+---
+interface Props {
+  sectionSlug: string;
+  lessonSlug: string;
+}
+
+const { sectionSlug, lessonSlug } = Astro.props;
+const lessonId = `${sectionSlug}/${lessonSlug}`;
+---
+
+<div class="flex items-center gap-3 mt-6" id="progress-controls">
+  <button
+    id="toggle-complete"
+    class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
+    data-lesson-id={lessonId}
+  >
+    <svg
+      id="check-icon"
+      class="w-4 h-4 hidden"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="M20 6L9 17l-5-5"></path>
+    </svg>
+    <span id="btn-text">Marcar como completada</span>
+  </button>
+
+  <span id="completion-status" class="text-xs text-white/50 hidden">
+    Lección guardada en tu progreso
+  </span>
+</div>
+
+<script>
+  import {
+    isLessonCompleted,
+    markLessonCompleted,
+    markLessonIncomplete,
+    setLastVisited,
+  } from "../../utils/progress";
+
+  const button = document.getElementById("toggle-complete");
+  const checkIcon = document.getElementById("check-icon");
+  const btnText = document.getElementById("btn-text");
+  const status = document.getElementById("completion-status");
+
+  if (button) {
+    const lessonId = button.dataset.lessonId;
+    const [sectionSlug, lessonSlug] = lessonId?.split("/") || [];
+
+    // Marcar como visitada
+    if (sectionSlug && lessonSlug) {
+      setLastVisited(sectionSlug, lessonSlug);
+    }
+
+    // Verificar estado inicial
+    const isCompleted =
+      lessonId && isLessonCompleted(sectionSlug!, lessonSlug!);
+    updateUI(isCompleted);
+
+    button.addEventListener("click", () => {
+      const currentlyCompleted =
+        lessonId && isLessonCompleted(sectionSlug!, lessonSlug!);
+
+      if (currentlyCompleted) {
+        markLessonIncomplete(sectionSlug!, lessonSlug!);
+        updateUI(false);
+      } else {
+        markLessonCompleted(sectionSlug!, lessonSlug!);
+        updateUI(true);
+      }
+
+      // Disparar evento para actualizar otros componentes
+      window.dispatchEvent(new CustomEvent("progress-updated"));
+    });
+
+    function updateUI(completed: boolean) {
+      if (completed) {
+        button?.classList.add(
+          "bg-emerald-500/20",
+          "text-emerald-400",
+          "border",
+          "border-emerald-500/30",
+        );
+        button?.classList.remove(
+          "bg-white/10",
+          "text-white/80",
+          "hover:bg-white/20",
+        );
+        if (checkIcon) checkIcon.classList.remove("hidden");
+        if (btnText) btnText.textContent = "Completada";
+        if (status) status.classList.remove("hidden");
+      } else {
+        button?.classList.remove(
+          "bg-emerald-500/20",
+          "text-emerald-400",
+          "border",
+          "border-emerald-500/30",
+        );
+        button?.classList.add(
+          "bg-white/10",
+          "text-white/80",
+          "hover:bg-white/20",
+        );
+        if (checkIcon) checkIcon.classList.add("hidden");
+        if (btnText) btnText.textContent = "Marcar como completada";
+        if (status) status.classList.add("hidden");
+      }
+    }
+  }
+</script>
