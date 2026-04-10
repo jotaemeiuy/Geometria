@@ -1,7 +1,5 @@
 ---
-import Celebration from "../../../components/course/Celebration.astro";
 import LessonNavigation from "../../../components/course/LessonNavigation.astro";
-import ProgressTracker from "../../../components/course/ProgressTracker.astro";
 import { courseData, getAdjacentLessons } from "../../../data/courseData";
 import Layout from "../../../layouts/Layout.astro";
 import Header from "../../../sections/Header.astro";
@@ -41,7 +39,7 @@ const progressWidth = Math.round((lessonNumber / totalLessons) * 100);
 
   <main class="max-w-6xl mx-auto px-6 py-12">
     <div class="grid gap-10 lg:grid-cols-[220px_minmax(0,1fr)]">
-      <aside class="hidden lg:block" data-section-slug={sectionSlug}>
+      <aside class="hidden lg:block">
         <div
           class="sticky top-24 rounded-4xl border border-white/8 bg-white/3 p-6 shadow-[0_20px_70px_rgba(15,23,42,0.35)]"
         >
@@ -90,46 +88,6 @@ const progressWidth = Math.round((lessonNumber / totalLessons) * 100);
             <p class="text-sm text-white/50">
               Lección {lessonNumber} de {totalLessons}
             </p>
-          </div>
-
-          <div class="border-t border-white/8 pt-4 mt-4">
-            <p class="text-xs uppercase tracking-[0.2em] text-white/40 mb-3">
-              Lecciones de esta sección
-            </p>
-            <ul class="space-y-1.5" id="sidebar-lessons">
-              {
-                section.lessons.map(
-                  (l: { slug: string; title: string }, index: number) => (
-                    <li>
-                      <a
-                        href={`/clase/${section.slug}/${l.slug}`}
-                        class={`flex items-center gap-2 py-1.5 px-2 rounded-md text-sm transition-all duration-200 ${
-                          l.slug === slug
-                            ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
-                            : "text-white/60 hover:bg-white/5 hover:text-white/80"
-                        }`}
-                        data-lesson-slug={l.slug}
-                      >
-                        <span class="text-xs text-white/30 w-4">
-                          {index + 1}
-                        </span>
-                        <span class="flex-1 truncate">{l.title}</span>
-                        <svg
-                          class="w-3.5 h-3.5 text-emerald-400 hidden lesson-check"
-                          data-check-slug={l.slug}
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                        >
-                          <path d="M20 6L9 17l-5-5" />
-                        </svg>
-                      </a>
-                    </li>
-                  ),
-                )
-              }
-            </ul>
           </div>
         </div>
       </aside>
@@ -194,87 +152,8 @@ const progressWidth = Math.round((lessonNumber / totalLessons) * 100);
           <Fragment set:html={lesson.content} />
         </article>
 
-        <ProgressTracker sectionSlug={sectionSlug} lessonSlug={slug} />
-
         <LessonNavigation prev={prev} next={next} />
       </div>
     </div>
   </main>
 </Layout>
-
-<script>
-  import { isLessonCompleted, getProgress } from "../../../utils/progress";
-
-  const sectionSlug =
-    document
-      .querySelector("[data-section-slug]")
-      ?.getAttribute("data-section-slug") ||
-    window.location.pathname.split("/")[2];
-
-  function updateSidebarChecks() {
-    const checkIcons = document.querySelectorAll(".lesson-check");
-    checkIcons.forEach((icon) => {
-      const lessonSlug = icon.getAttribute("data-check-slug");
-      if (lessonSlug && isLessonCompleted(sectionSlug, lessonSlug)) {
-        icon.classList.remove("hidden");
-      } else {
-        icon.classList.add("hidden");
-      }
-    });
-  }
-
-  function updateSectionProgress() {
-    const progress = getProgress();
-    const sectionLessons = document.querySelectorAll("[data-check-slug]");
-    const totalSectionLessons = sectionLessons.length;
-
-    let completedSectionLessons = 0;
-    sectionLessons.forEach((el) => {
-      const lessonSlug = el.getAttribute("data-check-slug");
-      if (lessonSlug && isLessonCompleted(sectionSlug, lessonSlug)) {
-        completedSectionLessons++;
-      }
-    });
-
-    const sectionProgress =
-      totalSectionLessons > 0
-        ? Math.round((completedSectionLessons / totalSectionLessons) * 100)
-        : 0;
-
-    // Actualizar barra de progreso de la sección
-    const progressBar = document.querySelector(".h-full.rounded-full");
-    const progressText = document.querySelector(
-      ".text-xs.font-medium.text-blue-300",
-    );
-    const completedBadge = document.querySelector(
-      ".text-xs.font-medium.text-emerald-400",
-    );
-
-    if (progressBar) {
-      (progressBar as HTMLElement).style.width = `${sectionProgress}%`;
-    }
-    if (progressText) {
-      progressText.textContent = `${sectionProgress}%`;
-    }
-
-    // Mostrar "Completado" si todas las lecciones de la sección están listas
-    if (
-      sectionProgress === 100 &&
-      progressText &&
-      completedBadge?.parentElement
-    ) {
-      progressText.parentElement?.classList.add("hidden");
-      completedBadge.parentElement?.classList.remove("hidden");
-    }
-  }
-
-  // Actualizar al cargar
-  updateSidebarChecks();
-  updateSectionProgress();
-
-  // Actualizar cuando se dispare el evento de progreso actualizado
-  window.addEventListener("progress-updated", () => {
-    updateSidebarChecks();
-    updateSectionProgress();
-  });
-</script>

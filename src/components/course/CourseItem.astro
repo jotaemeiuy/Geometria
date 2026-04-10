@@ -6,48 +6,16 @@ interface Props {
 }
 
 const { sectionSlug, title, slug } = Astro.props;
-const lessonId = `${sectionSlug}/${slug}`;
 ---
 
 <a
   href={`/clase/${sectionSlug}/${slug}`}
-  class="flex items-center gap-2 py-1.5 px-2 rounded-md hover:bg-white/3 hover:scale-[1.02] transition-all duration-200 group course-item"
-  data-lesson-id={lessonId}
+  class="flex items-center gap-2 py-1.5 px-2 rounded-md hover:bg-white/3 hover:scale-[1.02] transition-all duration-200 group"
 >
   <span class="text-blue-400 font-bold text-sm">></span>
   <span
-    class="text-white/80 group-hover:text-blue-400 transition-colors text-sm flex-1"
+    class="text-white/80 group-hover:text-blue-400 transition-colors text-sm"
   >
     {title}
   </span>
-  <svg
-    class="w-3.5 h-3.5 text-emerald-400 hidden course-check"
-    data-check-id={lessonId}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-  >
-    <path d="M20 6L9 17l-5-5"></path>
-  </svg>
 </a>
-
-<script>
-  import { isLessonCompleted } from "../../utils/progress";
-
-  function updateCourseChecks() {
-    const checkIcons = document.querySelectorAll(".course-check");
-    checkIcons.forEach((icon) => {
-      const lessonId = icon.getAttribute("data-check-id");
-      if (lessonId) {
-        const [sectionSlug, lessonSlug] = lessonId.split("/");
-        if (isLessonCompleted(sectionSlug, lessonSlug)) {
-          icon.classList.remove("hidden");
-        }
-      }
-    });
-  }
-
-  updateCourseChecks();
-  window.addEventListener("progress-updated", updateCourseChecks);
-</script>

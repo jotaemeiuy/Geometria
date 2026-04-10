@@ -73,31 +73,6 @@ import Hero from "../sections/Hero.astro";
       <div
         class="rounded-4xl border border-white/10 bg-slate-950/70 p-8 shadow-[0_30px_80px_rgba(15,23,42,0.35)]"
       >
-        <div class="mb-6 pb-6 border-b border-white/10">
-          <div class="flex items-center justify-between mb-2">
-            <h3
-              class="text-sm font-semibold text-white/80 uppercase tracking-wider"
-            >
-              Tu progreso
-            </h3>
-            <span
-              id="global-progress-text"
-              class="text-sm font-medium text-blue-400">0%</span
-            >
-          </div>
-          <div class="h-2 w-full rounded-full bg-white/10 overflow-hidden">
-            <div
-              id="global-progress-bar"
-              class="h-full rounded-full bg-linear-to-r from-blue-400 via-sky-400 to-cyan-300 transition-all duration-500"
-              style="width: 0%"
-            >
-            </div>
-          </div>
-          <p id="global-progress-detail" class="text-xs text-white/50 mt-2">
-            0 de 10 lecciones completadas
-          </p>
-        </div>
-
         <h3 class="text-xl font-bold text-white mb-4">Contenido del curso</h3>
         <p class="text-white/70 mb-6">
           Explora las cuatro grandes secciones del curso y abre la lección que
@@ -140,30 +115,3 @@ import Hero from "../sections/Hero.astro";
     </section>
   </main>
 </Layout>
-
-<script>
-  import { getCompletedCount, getProgressPercentage } from "../utils/progress";
-  import { courseData } from "../data/courseData";
-
-  const totalLessons = courseData.reduce(
-    (acc, section) => acc + section.lessons.length,
-    0,
-  );
-
-  function updateGlobalProgress() {
-    const completed = getCompletedCount();
-    const percentage = getProgressPercentage(totalLessons);
-
-    const progressBar = document.getElementById("global-progress-bar");
-    const progressText = document.getElementById("global-progress-text");
-    const progressDetail = document.getElementById("global-progress-detail");
-
-    if (progressBar) progressBar.style.width = `${percentage}%`;
-    if (progressText) progressText.textContent = `${percentage}%`;
-    if (progressDetail)
-      progressDetail.textContent = `${completed} de ${totalLessons} lecciones completadas`;
-  }
-
-  updateGlobalProgress();
-  window.addEventListener("progress-updated", updateGlobalProgress);
-</script>
