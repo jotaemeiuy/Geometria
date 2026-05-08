@@ -162,7 +162,100 @@ function draw() {
             <p>Guarda tu sketch en el editor de p5.js con el nombre "SeguirRaton". Experimenta con diferentes formas y colores.</p>
           </div>
         `
-      }
+      },{
+  title: "Usar una grilla para dibujar",
+  slug: "usar-grilla",
+  content: `
+    <p>Cuando dibujamos en p5.js, una grilla nos ayuda a ubicar mejor las figuras y entender las coordenadas del canvas.</p>
+
+    <p>La grilla funciona como una hoja cuadriculada: permite colocar puntos, líneas y figuras con mayor precisión.</p>
+
+    <aside class="callout">
+      <strong>Importante</strong>
+      <p>La grilla y el cursor deben dibujarse al final para que siempre queden visibles encima de todas las figuras.</p>
+    </aside>
+
+    <h2>Estructura básica</h2>
+
+    <p>El estudiante solamente debe escribir su dibujo en la sección indicada.</p>
+
+    <pre><code class="language-js">
+function setup() {
+  createCanvas(800, 600);
+  // ocultar cursor original
+  noCursor();
+
+}
+
+function draw() {
+  // =====================================
+  // CÓDIGO DEL ALUMNO
+  // Dibujar aquí
+  // =====================================
+  resetMatrix();
+  drawGrid(25);
+  drawCursor();
+}
+
+function drawGrid(step) {
+  stroke(0, 40);
+  strokeWeight(1);
+
+  // líneas verticales
+  for (let x = 0; x <= width; x += step) {
+    line(x, 0, x, height);
+  }
+
+  // líneas horizontales
+  for (let y = 0; y <= height; y += step) {
+    line(0, y, width, y);
+  }
+
+}
+
+function drawCursor() {
+
+  // borde blanco
+  stroke(255);
+  strokeWeight(4);
+
+  line(mouseX - 10, mouseY, mouseX + 10, mouseY);
+  line(mouseX, mouseY - 10, mouseX, mouseY + 10);
+
+  // borde negro interno
+  stroke(0);
+  strokeWeight(2);
+
+  line(mouseX - 10, mouseY, mouseX + 10, mouseY);
+  line(mouseX, mouseY - 10, mouseX, mouseY + 10);
+
+  // coordenadas
+  fill(0);
+  noStroke();
+
+  rect(mouseX + 15, mouseY - 20, 90, 22, 4);
+
+  fill(255);
+
+  text(
+    \`(\${mouseX}, \${mouseY})\`,
+    mouseX + 22,
+    mouseY - 6
+  );
+
+}
+    </code></pre>
+
+    
+    <aside class="callout">
+      <strong>Consejo</strong>
+      <p>Una separación de 25 o 50 píxeles suele ser cómoda para empezar a dibujar y ubicar objetos.</p>
+    </aside>
+  `
+}
+
+
+
     ]
   },
   {
