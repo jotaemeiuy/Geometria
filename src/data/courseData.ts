@@ -547,6 +547,102 @@ function mousePressed() {
         `
       }
     ]
+  },
+  {
+    number: "05",
+    title: "Proyecto Final",
+    slug: "proyecto-final",
+    description: "Demuestra todo lo aprendido creando un vehículo creativo",
+    iconId: "proyecto",
+    lessons: [
+      {
+        title: "Diseña tu vehículo",
+        slug: "disena-vehiculo",
+        content: `
+          <p>¡Llegó el momento de demostrar todo lo que has aprendido! Vas a crear tu propio vehículo al estilo de los <strong>Corredores Locos</strong>: colorido, divertido y lleno de personalidad.</p>
+          
+          <h2>El desafío</h2>
+          <p>Dibuja un vehículo (coche, camión, moto, o lo que imagines) usando <strong>todos</strong> estos elementos:</p>
+          
+          <aside class="callout">
+            <strong>Checklist de elementos obligatorios</strong>
+            <ul>
+              <li>✅ <strong>Círculos</strong> - para ruedas, faros, ojos de personaje</li>
+              <li>✅ <strong>Elipses</strong> - para formas ovaladas, espejos, escudos</li>
+              <li>✅ <strong>Rectángulos</strong> - para la carrocería, ventanas</li>
+              <li>✅ <strong>Líneas</strong> - para detalles, rayas decorativas, antenas</li>
+              <li>✅ <strong>Triángulos</strong> - usa <code>triangle(x1,y1,x2,y2,x3,y3)</code> para picos, alas, o colas</li>
+              <li>✅ <strong>Colores RGB</strong> - mínimo 5 colores diferentes</li>
+              <li>✅ <strong>Distintos grosores de línea</strong> - usa <code>strokeWeight()</code> al menos 3 veces</li>
+           </ul>
+          </aside>
+
+          <h2>Inspiración estilo Corredores Locos</h2>
+          <p>Los vehículos de esta serie tienen:</p>
+          <ul>
+            <li>Colores brillantes y llamativos (rosas, verdes neón, amarillos)</li>
+            <li>Formas exageradas - ruedas gigantes, carrocerías pequeñas</li>
+            <li>Ojos o expresiones en los faros</li>
+            <li>Detalles divertidos como escapes humeantes, alas, o helices</li>
+            <li>Nombres creativos pintados en el lateral</li>
+          </ul>
+
+          <h2>Ejemplo de estructura</h2>
+          <pre><code>function setup() {
+  createCanvas(600, 400);
+}
+
+function draw() {
+  background(135, 206, 235); // Cielo azul
+  
+  // Carrocería (rectángulo)
+  
+  // Ruedas (círculos)
+  
+  // Faros con ojos (elipses)
+
+  // Alerón trasero (triángulo)
+  
+  // Rayas decorativas (líneas)
+  
+}</code></pre>
+
+          <div class="lesson-card">
+            <strong>Consejo creativo</strong>
+            <p>Antes de programar, dibuja tu vehículo en papel. Decide qué formas usarás para cada parte y qué colores tendrá.</p>
+          </div>
+
+          <h2>Rúbrica de evaluación</h2>
+          <div class="lesson-card">
+            <strong>Criterios (100 puntos)</strong>
+            <ul>
+              <li>30 pts - Usa todas las formas requeridas (círculo, elipse, rect, línea, triángulo)</li>
+              <li>30 pts - Paleta de colores creativa (mínimo 5 colores)</li>
+              <li>20 pts - Variedad de grosores de línea</li>
+              <li>20 pts - Originalidad y estilo "Corredores Locos"</li>
+            </ul>
+          </div>
+
+          <h2>Planificación</h2>
+          <div class="lesson-card">
+            <strong>Paso 1</strong>
+            <p>En papel, dibuja dos bocetos diferentes de tu vehículo. Elige el más divertido.</p>
+          </div>
+          <div class="lesson-card">
+            <strong>Paso 2</strong>
+            <p>Lista cada parte de tu vehículo y escribe qué función de p5.js usarás (rect, ellipse, etc).</p>
+          </div>
+          <div class="lesson-card">
+            <strong>Paso 3</strong>
+            <p>Utiliza una paleta de colores: escribe los valores RGB de al menos 5 colores que usarás.</p>
+          </div>
+          <div class="lesson-card">
+            <strong>Paso 4</strong>
+            <p>Programa el vehículo completo en p5.js y comparte el enlace con tu profesor.</p>
+          </div>
+        `
+      }
+    ]
   }
 ];
 
