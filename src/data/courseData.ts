@@ -162,97 +162,7 @@ function draw() {
             <p>Guarda tu sketch en el editor de p5.js con el nombre "SeguirRaton". Experimenta con diferentes formas y colores.</p>
           </div>
         `
-      },{
-  title: "Usar una grilla para dibujar",
-  slug: "usar-grilla",
-  content: `
-    <p>Cuando dibujamos en p5.js, una grilla nos ayuda a ubicar mejor las figuras y entender las coordenadas del canvas.</p>
-
-    <p>La grilla funciona como una hoja cuadriculada: permite colocar puntos, líneas y figuras con mayor precisión.</p>
-
-    <aside class="callout">
-      <strong>Importante</strong>
-      <p>La grilla y el cursor deben dibujarse al final para que siempre queden visibles encima de todas las figuras.</p>
-    </aside>
-
-    <h2>Estructura básica</h2>
-
-    <p>El estudiante solamente debe escribir su dibujo en la sección indicada.</p>
-
-    <pre><code class="language-js">
-function setup() {
-  createCanvas(800, 600);
-  // ocultar cursor original
-  noCursor();
-
-}
-
-function draw() {
-  // =====================================
-  // CÓDIGO DEL ALUMNO
-  // Dibujar aquí
-  // =====================================
-  resetMatrix();
-  drawGrid(25);
-  drawCursor();
-}
-
-function drawGrid(step) {
-  stroke(0, 40);
-  strokeWeight(1);
-
-  // líneas verticales
-  for (let x = 0; x <= width; x += step) {
-    line(x, 0, x, height);
-  }
-
-  // líneas horizontales
-  for (let y = 0; y <= height; y += step) {
-    line(0, y, width, y);
-  }
-
-}
-
-function drawCursor() {
-
-  // borde blanco
-  stroke(255);
-  strokeWeight(4);
-
-  line(mouseX - 10, mouseY, mouseX + 10, mouseY);
-  line(mouseX, mouseY - 10, mouseX, mouseY + 10);
-
-  // borde negro interno
-  stroke(0);
-  strokeWeight(2);
-
-  line(mouseX - 10, mouseY, mouseX + 10, mouseY);
-  line(mouseX, mouseY - 10, mouseX, mouseY + 10);
-
-  // coordenadas
-  fill(0);
-  noStroke();
-
-  rect(mouseX + 15, mouseY - 20, 90, 22, 4);
-
-  fill(255);
-
-  text(
-    \`(\${mouseX}, \${mouseY})\`,
-    mouseX + 22,
-    mouseY - 6
-  );
-
-}
-    </code></pre>
-
-    
-    <aside class="callout">
-      <strong>Consejo</strong>
-      <p>Una separación de 25 o 50 píxeles suele ser cómoda para empezar a dibujar y ubicar objetos.</p>
-    </aside>
-  `
-}
+      }
 
 
 
@@ -732,6 +642,292 @@ function draw() {
           <div class="lesson-card">
             <strong>Paso 4</strong>
             <p>Programa el vehículo completo en p5.js y comparte el enlace con tu profesor.</p>
+          </div>
+        `
+      }
+    ]
+  },
+  {
+    number: "06",
+    title: "Transformaciones",
+    slug: "transformaciones",
+    description: "Mueve, rota y escala tus dibujos",
+    iconId: "transformaciones",
+    lessons: [
+      {
+        title: "translate() - Mover el origen",
+        slug: "translate",
+        content: `
+          <p><code>translate(x, y)</code> mueve el origen de coordenadas (0, 0) a una nueva posición. Todo lo que dibujes después se posiciona relativo a ese nuevo origen.</p>
+          
+          <h2>Cómo funciona</h2>
+          <pre><code>function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background(220);
+  
+  // Sin translate - el círculo está en (50, 50)
+  fill(255, 0, 0);
+  ellipse(50, 50, 30, 30);
+  
+  // Con translate - movemos el origen a (200, 200)
+  translate(200, 200);
+  fill(0, 0, 255);
+  ellipse(0, 0, 30, 30); // Ahora (0,0) está en (200,200)
+}</code></pre>
+          
+          <h2>Importante</h2>
+          <ul>
+            <li><code>translate()</code> afecta a todo lo que se dibuja después</li>
+            <li>El origen por defecto es la esquina superior izquierda (0, 0)</li>
+            <li>Valores positivos mueven el origen hacia abajo y derecha</li>
+          </ul>
+          
+          <aside class="callout">
+            <strong>frameCount</strong>
+            <p><code>frameCount</code> es una variable de p5.js que cuenta cuántos frames han pasado desde que el sketch empezó. Aumenta 1 cada vez que <code>draw()</code> se ejecuta (aproximadamente 60 veces por segundo). Úsalo para crear animaciones simples.</p>
+          </aside>
+          
+          <aside class="callout">
+            <strong>Consejo</strong>
+            <p>Usa <code>translate()</code> para dibujar objetos en posiciones específicas sin tener que calcular todas las coordenadas manualmente.</p>
+          </aside>
+
+          <h2>Ejercicios</h2>
+          <div class="lesson-card">
+            <strong>Ejercicio 1</strong>
+            <p>Dibuja 3 círculos en fila usando <code>translate()</code> para mover el origen entre cada uno.</p>
+          </div>
+          <div class="lesson-card">
+            <strong>Ejercicio 2</strong>
+            <p>Crea una cuadrícula de 4x4 cuadrados usando <code>translate()</code> en un bucle.</p>
+          </div>
+          <div class="lesson-card">
+            <strong>Ejercicio 3</strong>
+            <p>Dibuja una cara simple (ojos y boca) centrada en el lienzo usando <code>translate(width/2, height/2)</code>.</p>
+          </div>
+          <div class="lesson-card">
+            <strong>Ejercicio 4</strong>
+            <p>Usa <code>translate()</code> para dibujar 5 rectángulos escalonados como escaleras.</p>
+          </div>
+          <div class="lesson-card">
+            <strong>Ejercicio 5</strong>
+            <p>Crea un patrón de puntos que se mueva diagonalmente usando <code>translate()</code> con <code>frameCount</code>.</p>
+          </div>
+        `
+      },
+      {
+        title: "rotate() - Rotar elementos",
+        slug: "rotate",
+        content: `
+          <p><code>rotate(angle)</code> rota el sistema de coordenadas alrededor del origen actual.</p>
+          
+          <h2>Usar grados en p5.js</h2>
+          <p>Por defecto, p5.js usa radianes, pero puedes cambiar el modo a grados con <code>angleMode(DEGREES)</code>:</p>
+          <pre><code>function setup() {
+  createCanvas(400, 400);
+  angleMode(DEGREES); // Usar grados en todo el sketch
+}
+
+function draw() {
+  background(220);
+  translate(200, 200);
+  rotate(90);  // Ahora 90 grados, no radianes
+  rect(-50, -50, 100, 100);
+}</code></pre>
+          <p>Con <code>angleMode(DEGREES)</code>, puedes usar valores directamente en grados: 90°, 180°, 45°, etc.</p>
+          
+          <h2>Ejemplo básico</h2>
+          <pre><code>function setup() {
+  createCanvas(400, 400);
+  angleMode(DEGREES);
+}
+
+function draw() {
+  background(220);
+  
+  translate(200, 200); // Mover al centro
+  rotate(frameCount * 2); // Rotar 2 grados por frame
+  
+  rect(-50, -50, 100, 100); // Dibujar rectángulo centrado
+}</code></pre>
+          
+          <h2>Conceptos clave</h2>
+          <ul>
+            <li>La rotación es siempre alrededor del origen actual</li>
+            <li>Usa <code>translate()</code> antes de <code>rotate()</code> para rotar alrededor de un punto específico</li>
+            <li>Valores positivos rotan en sentido horario</li>
+            <li>Con <code>angleMode(DEGREES)</code>, usa valores en grados (0-360)</li>
+          </ul>
+          
+          <aside class="callout">
+            <strong>Truco</strong>
+            <p>Para rotar un objeto alrededor de su centro, primero traslada al centro del objeto, luego rota, y dibuja el objeto centrado en (0, 0).</p>
+          </aside>
+
+          <h2>Ejercicios</h2>
+          <div class="lesson-card">
+            <strong>Ejercicio 1</strong>
+            <p>Dibuja un cuadrado que rote 90 grados cada 60 frames usando <code>frameCount % 60 === 0</code>.</p>
+          </div>
+          <div class="lesson-card">
+            <strong>Ejercicio 2</strong>
+            <p>Crea 3 rectángulos que roten a diferentes velocidades usando <code>frameCount</code>.</p>
+          </div>
+          <div class="lesson-card">
+            <strong>Ejercicio 3</strong>
+            <p>Dibuja una rueda con radios que rote continuamente.</p>
+          </div>
+          <div class="lesson-card">
+            <strong>Ejercicio 4</strong>
+            <p>Crea un reloj simple con una aguja que rote según el tiempo real (usa <code>second()</code>).</p>
+          </div>
+          <div class="lesson-card">
+            <strong>Ejercicio 5</strong>
+            <p>Crea un patrón de 6 rectángulos que roten alrededor del centro, cada uno con un ángulo diferente (0°, 60°, 120°, 180°, 240°, 300°).</p>
+          </div>
+        `
+      },
+      {
+        title: "scale() - Escalar tamaño",
+        slug: "scale",
+        content: `
+          <p><code>scale(s)</code> escala el sistema de coordenadas. Puedes escalar uniformemente o con diferentes valores para X e Y.</p>
+          
+          <h2>Escala uniforme</h2>
+          <pre><code>scale(2); // Duplica el tamaño de todo
+scale(0.5); // Reduce a la mitad</code></pre>
+          
+          <h2>Escala no uniforme</h2>
+          <pre><code>scale(2, 0.5); // Doble de ancho, mitad de alto</code></pre>
+          
+          <h2>Ejemplo completo</h2>
+          <pre><code>function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background(220);
+  
+  // Rectángulo original
+  fill(255, 0, 0);
+  rect(50, 50, 50, 50);
+  
+  // Rectángulo escalado
+  translate(200, 200);
+  scale(2);
+  fill(0, 0, 255);
+  rect(0, 0, 50, 50); // Se dibuja doble de grande
+}</code></pre>
+          
+          <h2>Notas importantes</h2>
+          <ul>
+            <li><code>scale()</code> afecta al grosor de las líneas también</li>
+            <li>Valores menores a 1 reducen el tamaño</li>
+            <li>Valores negativos invierten la imagen (efecto espejo)</li>
+          </ul>
+          
+          <aside class="callout">
+            <strong>Aplicación</strong>
+            <p>Usa <code>scale()</code> para crear efectos de zoom, dibujar objetos de diferentes tamaños sin cambiar sus dimensiones originales.</p>
+          </aside>
+
+          <h2>Ejercicios</h2>
+          <div class="lesson-card">
+            <strong>Ejercicio 1</strong>
+            <p>Dibuja 5 círculos del mismo código pero con diferentes tamaños usando <code>scale()</code>.</p>
+          </div>
+          <div class="lesson-card">
+            <strong>Ejercicio 2</strong>
+            <p>Crea un efecto de "respiración" donde un objeto crezca y se encoja usando <code>sin(frameCount)</code>.</p>
+          </div>
+          <div class="lesson-card">
+            <strong>Ejercicio 3</strong>
+            <p>Usa <code>scale(-1, 1)</code> para crear un reflejo espejo de un dibujo.</p>
+          </div>
+          <div class="lesson-card">
+            <strong>Ejercicio 4</strong>
+            <p>Dibuja una casa y luego una versión miniatura de la misma usando <code>scale()</code>.</p>
+          </div>
+          <div class="lesson-card">
+            <strong>Ejercicio 5</strong>
+            <p>Crea una secuencia donde 3 objetos aparezcan escalándose desde tamaño 0 hasta tamaño 1 usando <code>scale()</code> con <code>frameCount</code>.</p>
+          </div>
+        `
+      },
+      {
+        title: "push() y pop() - Guardar y restaurar estado",
+        slug: "push-pop",
+        content: `
+          <p><code>push()</code> guarda el estado actual del sistema de coordenadas. <code>pop()</code> lo restaura. Son esenciales cuando usas múltiples transformaciones.</p>
+          
+          <h2>Cómo funcionan</h2>
+          <pre><code>push();   // Guardar estado
+translate(100, 100);
+rotate(PI/4);
+scale(2);
+// Dibujar algo transformado
+pop();    // Restaurar estado original</code></pre>
+          
+          <h2>Ejemplo práctico</h2>
+          <pre><code>function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background(220);
+  
+  // Primer objeto
+  push();
+  translate(100, 100);
+  rotate(frameCount * 0.02);
+  fill(255, 0, 0);
+  rect(-25, -25, 50, 50);
+  pop();
+  
+  // Segundo objeto (no afectado por el primero)
+  push();
+  translate(300, 300);
+  rotate(-frameCount * 0.03);
+  fill(0, 0, 255);
+  ellipse(0, 0, 50, 50);
+  pop();
+}</code></pre>
+          
+          <h2>Reglas importantes</h2>
+          <ul>
+            <li>Cada <code>push()</code> debe tener un <code>pop()</code> correspondiente</li>
+            <li>Puedes anidar múltiples <code>push()</code> y <code>pop()</code></li>
+            <li><code>push()</code> guarda: translate, rotate, scale, fill, stroke, etc.</li>
+          </ul>
+          
+          <aside class="callout">
+            <strong>Mejor práctica</strong>
+            <p>Usa <code>push()</code> y <code>pop()</code> siempre que apliques transformaciones a objetos individuales. Esto evita que las transformaciones afecten a otros objetos.</p>
+          </aside>
+
+          <h2>Ejercicios</h2>
+          <div class="lesson-card">
+            <strong>Ejercicio 1</strong>
+            <p>Dibuja 3 cuadrados que roten independientemente usando <code>push()</code> y <code>pop()</code> para cada uno.</p>
+          </div>
+          <div class="lesson-card">
+            <strong>Ejercicio 2</strong>
+            <p>Crea un sistema solar con planetas que orbiten a diferentes velocidades (usa push/pop anidados).</p>
+          </div>
+          <div class="lesson-card">
+            <strong>Ejercicio 3</strong>
+            <p>Dibuja una flor con pétalos que roten alrededor del centro, cada uno con su propia rotación.</p>
+          </div>
+          <div class="lesson-card">
+            <strong>Ejercicio 4</strong>
+            <p>Crea un brazo robótico con 3 segmentos que cada uno rote independientemente.</p>
+          </div>
+          <div class="lesson-card">
+            <strong>Ejercicio 5</strong>
+            <p>Crea un reloj con 3 agujas (horas, minutos, segundos) que roten independientemente usando <code>push()</code> y <code>pop()</code> para cada una.</p>
           </div>
         `
       }
