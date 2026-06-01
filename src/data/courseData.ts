@@ -649,285 +649,271 @@ function draw() {
   },
   {
     number: "06",
-    title: "Transformaciones",
+    title: "Transformaciones e isometrías",
     slug: "transformaciones",
-    description: "Mueve, rota y escala tus dibujos",
+    description: "Traslación, rotación y simetrías del plano con p5.js",
     iconId: "transformaciones",
     lessons: [
       {
-        title: "translate() - Mover el origen",
+        title: "Traslación con translate()",
         slug: "translate",
         content: `
-          <p><code>translate(x, y)</code> mueve el origen de coordenadas (0, 0) a una nueva posición. Todo lo que dibujes después se posiciona relativo a ese nuevo origen.</p>
+          <p>En geometría, una <strong>isometría</strong> es una transformación que conserva distancias y ángulos: la figura imagen es congruente con la original. La <strong>traslación</strong> desplaza todos los puntos según un vector \((dx, dy)\).</p>
           
-          <h2>Cómo funciona</h2>
+          <p>En p5.js, <code>translate(dx, dy)</code> mueve el origen del sistema de coordenadas. Todo lo que dibujes después queda desplazado respecto a la figura que dibujaste antes, sin cambiar su forma ni su tamaño.</p>
+          
+          <aside class="callout">
+            <strong>Isometría y traslación</strong>
+            <p>La traslación es una isometría: dos figuras iguales en distinta posición tienen los mismos lados y los mismos ángulos. Solo cambia su lugar en el plano.</p>
+          </aside>
+          
+          <h2>Ejemplo en setup()</h2>
           <pre><code>function setup() {
   createCanvas(400, 400);
-}
-
-function draw() {
   background(220);
-  
-  // Sin translate - el círculo está en (50, 50)
-  fill(255, 0, 0);
-  ellipse(50, 50, 30, 30);
-  
-  // Con translate - movemos el origen a (200, 200)
-  translate(200, 200);
-  fill(0, 0, 255);
-  ellipse(0, 0, 30, 30); // Ahora (0,0) está en (200,200)
+
+  // Triángulo original
+  fill(255, 100, 100);
+  triangle(40, 200, 100, 200, 70, 140);
+
+  // Misma figura tras una traslación
+  let dx = 150;
+  let dy = 0;
+  translate(dx, dy);
+  fill(100, 100, 255);
+  triangle(40, 200, 100, 200, 70, 140);
 }</code></pre>
           
           <h2>Importante</h2>
           <ul>
-            <li><code>translate()</code> afecta a todo lo que se dibuja después</li>
-            <li>El origen por defecto es la esquina superior izquierda (0, 0)</li>
-            <li>Valores positivos mueven el origen hacia abajo y derecha</li>
+            <li>El vector de traslación es \((dx, dy)\): positivo en <code>x</code> va a la derecha; positivo en <code>y</code> va hacia abajo en p5.js.</li>
+            <li>Puedes guardar el vector en variables: <code>let dx = 120; let dy = 50;</code></li>
+            <li><code>translate()</code> afecta a todo lo que se dibuja después en ese sketch.</li>
           </ul>
           
           <aside class="callout">
-            <strong>frameCount</strong>
-            <p><code>frameCount</code> es una variable de p5.js que cuenta cuántos frames han pasado desde que el sketch empezó. Aumenta 1 cada vez que <code>draw()</code> se ejecuta (aproximadamente 60 veces por segundo). Úsalo para crear animaciones simples.</p>
-          </aside>
-          
-          <aside class="callout">
-            <strong>Consejo</strong>
-            <p>Usa <code>translate()</code> para dibujar objetos en posiciones específicas sin tener que calcular todas las coordenadas manualmente.</p>
+            <strong>Vector con variables</strong>
+            <p>Define <code>let dx</code> y <code>let dy</code> al inicio de <code>setup()</code> y reutiliza los mismos valores cada vez que repitas el dibujo de una figura trasladada.</p>
           </aside>
 
           <h2>Ejercicios</h2>
+          <p>Usa solo <code>setup()</code> en el editor de p5.js (sin <code>draw()</code>, bucles ni condicionales).</p>
           <div class="lesson-card">
             <strong>Ejercicio 1</strong>
-            <p>Dibuja 3 círculos en fila usando <code>translate()</code> para mover el origen entre cada uno.</p>
+            <p>Dibuja un triángulo en una posición y la misma figura trasladada con <code>translate()</code>. En papel, responde: ¿son congruentes? ¿Qué conserva la traslación?</p>
           </div>
           <div class="lesson-card">
             <strong>Ejercicio 2</strong>
-            <p>Crea una cuadrícula de 4x4 cuadrados usando <code>translate()</code> en un bucle.</p>
+            <p>Define <code>let dx = 80;</code> y <code>let dy = 0;</code>. Dibuja un cuadrado pequeño y repítelo tres veces en fila con tres bloques <code>translate(dx, dy)</code> + dibujo (sin bucles).</p>
           </div>
           <div class="lesson-card">
             <strong>Ejercicio 3</strong>
-            <p>Dibuja una cara simple (ojos y boca) centrada en el lienzo usando <code>translate(width/2, height/2)</code>.</p>
+            <p>Traslada una figura hacia arriba usando <code>dy</code> negativo (por ejemplo <code>let dy = -60;</code>). Anota en papel el vector \((dx, dy)\) que usaste.</p>
           </div>
           <div class="lesson-card">
             <strong>Ejercicio 4</strong>
-            <p>Usa <code>translate()</code> para dibujar 5 rectángulos escalonados como escaleras.</p>
+            <p>Dibuja una figura en forma de «L» con dos <code>rect()</code>. Cópiala con <code>translate()</code> para tener un par de figuras iguales en distinta posición.</p>
           </div>
           <div class="lesson-card">
             <strong>Ejercicio 5</strong>
-            <p>Crea un patrón de puntos que se mueva diagonalmente usando <code>translate()</code> con <code>frameCount</code>.</p>
+            <p>En papel, dibuja dos copias de la misma figura y marca con una flecha el vector de traslación que lleva una sobre la otra.</p>
           </div>
         `
       },
       {
-        title: "rotate() - Rotar elementos",
+        title: "Rotación con rotate()",
         slug: "rotate",
         content: `
-          <p><code>rotate(angle)</code> rota el sistema de coordenadas alrededor del origen actual.</p>
+          <p>La <strong>rotación</strong> es una isometría: gira la figura alrededor de un <strong>centro</strong> y un <strong>ángulo</strong>, conservando distancias y ángulos.</p>
           
-          <h2>Usar grados en p5.js</h2>
-          <p>Por defecto, p5.js usa radianes, pero puedes cambiar el modo a grados con <code>angleMode(DEGREES)</code>:</p>
-          <pre><code>function setup() {
-  createCanvas(400, 400);
-  angleMode(DEGREES); // Usar grados en todo el sketch
-}
-
-function draw() {
-  background(220);
-  translate(200, 200);
-  rotate(90);  // Ahora 90 grados, no radianes
-  rect(-50, -50, 100, 100);
-}</code></pre>
-          <p>Con <code>angleMode(DEGREES)</code>, puedes usar valores directamente en grados: 90°, 180°, 45°, etc.</p>
+          <p>En p5.js, <code>rotate(angle)</code> gira el sistema de coordenadas alrededor del origen actual. Para elegir el centro, primero usa <code>translate()</code> hasta ese punto.</p>
           
-          <h2>Ejemplo básico</h2>
+          <h2>Usar grados</h2>
+          <p>Activa grados con <code>angleMode(DEGREES)</code> en <code>setup()</code>:</p>
           <pre><code>function setup() {
   createCanvas(400, 400);
   angleMode(DEGREES);
-}
-
-function draw() {
   background(220);
-  
-  translate(200, 200); // Mover al centro
-  rotate(frameCount * 2); // Rotar 2 grados por frame
-  
-  rect(-50, -50, 100, 100); // Dibujar rectángulo centrado
+
+  translate(200, 200); // Centro de rotación
+  rotate(90);
+  fill(100, 150, 255);
+  rect(-40, -15, 80, 30);
 }</code></pre>
           
           <h2>Conceptos clave</h2>
           <ul>
-            <li>La rotación es siempre alrededor del origen actual</li>
-            <li>Usa <code>translate()</code> antes de <code>rotate()</code> para rotar alrededor de un punto específico</li>
-            <li>Valores positivos rotan en sentido horario</li>
-            <li>Con <code>angleMode(DEGREES)</code>, usa valores en grados (0-360)</li>
+            <li>La rotación es siempre alrededor del origen actual del sistema.</li>
+            <li><code>translate(centroX, centroY)</code> y luego <code>rotate(ángulo)</code> definen el centro y el giro.</li>
+            <li>Con <code>angleMode(DEGREES)</code>, usa 90°, 180°, 45°, etc.</li>
+            <li><strong>Simetría rotacional:</strong> si cuatro giros de 90° dejan la figura igual, tiene simetría rotacional de orden 4.</li>
           </ul>
           
           <aside class="callout">
-            <strong>Truco</strong>
-            <p>Para rotar un objeto alrededor de su centro, primero traslada al centro del objeto, luego rota, y dibuja el objeto centrado en (0, 0).</p>
+            <strong>Centro de rotación</strong>
+            <p>Para rotar alrededor del centro del lienzo: <code>translate(width/2, height/2)</code>, luego <code>rotate()</code>, y dibuja la figura centrada en <code>(0, 0)</code>.</p>
           </aside>
 
           <h2>Ejercicios</h2>
+          <p>Usa solo <code>setup()</code> y <code>angleMode(DEGREES)</code>. Puedes usar <code>push()</code> y <code>pop()</code> para separar cada figura.</p>
           <div class="lesson-card">
             <strong>Ejercicio 1</strong>
-            <p>Dibuja un cuadrado que rote 90 grados cada 60 frames usando <code>frameCount % 60 === 0</code>.</p>
+            <p>Dibuja el mismo rectángulo dos veces: una con <code>rotate(90)</code> y otra con <code>rotate(180)</code> (dos bloques <code>push/pop</code> o dos sketches). Compara su orientación.</p>
           </div>
           <div class="lesson-card">
             <strong>Ejercicio 2</strong>
-            <p>Crea 3 rectángulos que roten a diferentes velocidades usando <code>frameCount</code>.</p>
+            <p>Coloca el centro en el medio del lienzo: <code>translate(width/2, height/2)</code>, <code>rotate(45)</code>, y dibuja un rectángulo centrado en el origen.</p>
           </div>
           <div class="lesson-card">
             <strong>Ejercicio 3</strong>
-            <p>Dibuja una rueda con radios que rote continuamente.</p>
+            <p>Haz una «rueda» de 4 brazos: cuatro bloques <code>push</code> → <code>translate</code> al centro → <code>rotate(0)</code>, <code>rotate(90)</code>, <code>rotate(180)</code>, <code>rotate(270)</code> → dibuja un segmento → <code>pop</code>.</p>
           </div>
           <div class="lesson-card">
             <strong>Ejercicio 4</strong>
-            <p>Crea un reloj simple con una aguja que rote según el tiempo real (usa <code>second()</code>).</p>
+            <p>En papel, dibuja un punto <code>P</code> y su imagen <code>P'</code> tras una rotación de 90° alrededor de un punto <code>O</code>. Marca el ángulo en <code>O</code>.</p>
           </div>
           <div class="lesson-card">
             <strong>Ejercicio 5</strong>
-            <p>Crea un patrón de 6 rectángulos que roten alrededor del centro, cada uno con un ángulo diferente (0°, 60°, 120°, 180°, 240°, 300°).</p>
+            <p>En tu sketch, coloca dos copias de la misma figura. Indica en papel qué ángulo (90°, 180° o 270°) relaciona una con la otra respecto al centro elegido.</p>
           </div>
         `
       },
       {
-        title: "scale() - Escalar tamaño",
+        title: "Simetría axial y central con scale()",
         slug: "scale",
         content: `
-          <p><code>scale(s)</code> escala el sistema de coordenadas. Puedes escalar uniformemente o con diferentes valores para X e Y.</p>
-          
-          <h2>Escala uniforme</h2>
-          <pre><code>scale(2); // Duplica el tamaño de todo
-scale(0.5); // Reduce a la mitad</code></pre>
-          
-          <h2>Escala no uniforme</h2>
-          <pre><code>scale(2, 0.5); // Doble de ancho, mitad de alto</code></pre>
-          
-          <h2>Ejemplo completo</h2>
-          <pre><code>function setup() {
-  createCanvas(400, 400);
-}
-
-function draw() {
-  background(220);
-  
-  // Rectángulo original
-  fill(255, 0, 0);
-  rect(50, 50, 50, 50);
-  
-  // Rectángulo escalado
-  translate(200, 200);
-  scale(2);
-  fill(0, 0, 255);
-  rect(0, 0, 50, 50); // Se dibuja doble de grande
-}</code></pre>
-          
-          <h2>Notas importantes</h2>
+          <p>Además de la traslación y la rotación, hay isometrías ligadas a las <strong>simetrías</strong>:</p>
           <ul>
-            <li><code>scale()</code> afecta al grosor de las líneas también</li>
-            <li>Valores menores a 1 reducen el tamaño</li>
-            <li>Valores negativos invierten la imagen (efecto espejo)</li>
+            <li><strong>Simetría axial:</strong> cada punto <code>P</code> tiene una imagen <code>P'</code> al otro lado de un eje (recta), a la misma distancia.</li>
+            <li><strong>Simetría central:</strong> cada punto <code>P</code> tiene una imagen <code>P'</code> tal que el centro <code>O</code> es el punto medio del segmento <code>PP'</code>.</li>
           </ul>
           
+          <p>En p5.js, con factor 1 en módulo, <code>scale(-1, 1)</code> representa una reflexión (simetría axial respecto a un eje vertical) y <code>scale(-1, -1)</code> una simetría central respecto al origen actual.</p>
+          
+          <h2>Simetría axial (eje vertical)</h2>
+          <pre><code>function setup() {
+  createCanvas(400, 400);
+  background(220);
+  let ejeX = 200;
+
+  stroke(150);
+  line(ejeX, 0, ejeX, 400); // Eje de simetría
+
+  // Mitad izquierda
+  fill(255, 150, 150);
+  triangle(80, 250, 120, 250, 100, 180);
+
+  // Mitad derecha (reflexión)
+  push();
+  translate(ejeX, 0);
+  scale(-1, 1);
+  fill(150, 150, 255);
+  triangle(80, 250, 120, 250, 100, 180);
+  pop();
+}</code></pre>
+          
+          <h2>Simetría central</h2>
+          <pre><code>push();
+translate(width/2, height/2);
+scale(-1, -1);
+// Dibuja la figura centrada en (0, 0)
+pop();</code></pre>
+          
           <aside class="callout">
-            <strong>Aplicación</strong>
-            <p>Usa <code>scale()</code> para crear efectos de zoom, dibujar objetos de diferentes tamaños sin cambiar sus dimensiones originales.</p>
+            <strong>¿Es siempre isometría?</strong>
+            <p><code>scale(2)</code> agranda la figura: es una <strong>homotecia</strong>, no una isometría, porque cambian las distancias. Con <code>scale(-1, 1)</code> o <code>scale(-1, -1)</code> (factor 1 en valor absoluto) sí conservas distancias y ángulos.</p>
           </aside>
 
           <h2>Ejercicios</h2>
+          <p>Usa solo <code>setup()</code>. Marca el eje o el centro cuando te lo pidan.</p>
           <div class="lesson-card">
             <strong>Ejercicio 1</strong>
-            <p>Dibuja 5 círculos del mismo código pero con diferentes tamaños usando <code>scale()</code>.</p>
+            <p>Dibuja la mitad izquierda de una mariposa o triángulo. Completa la mitad derecha con simetría axial; el eje vertical está en <code>x = 200</code> (usa <code>translate</code> + <code>scale(-1, 1)</code>).</p>
           </div>
           <div class="lesson-card">
             <strong>Ejercicio 2</strong>
-            <p>Crea un efecto de "respiración" donde un objeto crezca y se encoja usando <code>sin(frameCount)</code>.</p>
+            <p>Dibuja una letra «E» o una figura irregular y su imagen con simetría axial. Marca el eje con una <code>line()</code> vertical.</p>
           </div>
           <div class="lesson-card">
             <strong>Ejercicio 3</strong>
-            <p>Usa <code>scale(-1, 1)</code> para crear un reflejo espejo de un dibujo.</p>
+            <p>Dibuja un punto (círculo pequeño) y su imagen bajo simetría central respecto al centro del lienzo (<code>translate(width/2, height/2)</code> + <code>scale(-1, -1)</code>).</p>
           </div>
           <div class="lesson-card">
             <strong>Ejercicio 4</strong>
-            <p>Dibuja una casa y luego una versión miniatura de la misma usando <code>scale()</code>.</p>
+            <p>En papel, clasifica: ¿tiene eje de simetría, centro de simetría, ambos o ninguno? (cuadrado, letra «S», círculo).</p>
           </div>
           <div class="lesson-card">
             <strong>Ejercicio 5</strong>
-            <p>Crea una secuencia donde 3 objetos aparezcan escalándose desde tamaño 0 hasta tamaño 1 usando <code>scale()</code> con <code>frameCount</code>.</p>
+            <p>Dibuja un segmento <code>AB</code> y su imagen <code>A'B'</code> con simetría central. Comprueba en papel que el centro del lienzo queda a mitad de camino entre <code>A</code> y <code>A'</code>.</p>
           </div>
         `
       },
       {
-        title: "push() y pop() - Guardar y restaurar estado",
+        title: "Componer isometrías con push() y pop()",
         slug: "push-pop",
         content: `
-          <p><code>push()</code> guarda el estado actual del sistema de coordenadas. <code>pop()</code> lo restaura. Son esenciales cuando usas múltiples transformaciones.</p>
+          <p>Cuando aplicas varias isometrías en un mismo sketch, <code>push()</code> guarda el estado actual (traslación, rotación, escala, colores…) y <code>pop()</code> lo restaura. Así cada figura lleva su propia transformación sin alterar la siguiente.</p>
           
-          <h2>Cómo funcionan</h2>
-          <pre><code>push();   // Guardar estado
-translate(100, 100);
-rotate(PI/4);
-scale(2);
-// Dibujar algo transformado
-pop();    // Restaurar estado original</code></pre>
+          <aside class="callout">
+            <strong>Composición</strong>
+            <p>Puedes combinar traslación, rotación y simetría. El orden importa: primero <code>translate</code>, luego <code>rotate</code> o <code>scale</code>, suele dar un resultado distinto que al revés.</p>
+          </aside>
           
-          <h2>Ejemplo práctico</h2>
+          <h2>Ejemplo en setup()</h2>
           <pre><code>function setup() {
   createCanvas(400, 400);
-}
-
-function draw() {
+  angleMode(DEGREES);
   background(220);
-  
-  // Primer objeto
+
+  // Figura 1: traslación
   push();
-  translate(100, 100);
-  rotate(frameCount * 0.02);
-  fill(255, 0, 0);
-  rect(-25, -25, 50, 50);
+  translate(80, 120);
+  fill(255, 120, 120);
+  rect(0, 0, 40, 40);
   pop();
-  
-  // Segundo objeto (no afectado por el primero)
+
+  // Figura 2: rotación en otro lugar
   push();
-  translate(300, 300);
-  rotate(-frameCount * 0.03);
-  fill(0, 0, 255);
-  ellipse(0, 0, 50, 50);
+  translate(280, 200);
+  rotate(45);
+  fill(120, 120, 255);
+  rect(-20, -20, 40, 40);
   pop();
 }</code></pre>
           
           <h2>Reglas importantes</h2>
           <ul>
-            <li>Cada <code>push()</code> debe tener un <code>pop()</code> correspondiente</li>
-            <li>Puedes anidar múltiples <code>push()</code> y <code>pop()</code></li>
-            <li><code>push()</code> guarda: translate, rotate, scale, fill, stroke, etc.</li>
+            <li>Cada <code>push()</code> debe tener su <code>pop()</code> correspondiente.</li>
+            <li>Repite bloques <code>push → transformar → dibujar → pop</code> en lugar de usar bucles.</li>
+            <li>Útil para teselados, figuras repetidas y simetrías sin mezclar transformaciones.</li>
           </ul>
           
           <aside class="callout">
-            <strong>Mejor práctica</strong>
-            <p>Usa <code>push()</code> y <code>pop()</code> siempre que apliques transformaciones a objetos individuales. Esto evita que las transformaciones afecten a otros objetos.</p>
+            <strong>Isometrías en este curso</strong>
+            <p>Traslación (<code>translate</code>), rotación (<code>rotate</code>), simetría axial y central (<code>scale(-1, …)</code>). Todas conservan forma y tamaño cuando las usas como en las lecciones anteriores.</p>
           </aside>
 
           <h2>Ejercicios</h2>
+          <p>Usa solo <code>setup()</code>. Separa cada figura con <code>push()</code> y <code>pop()</code>.</p>
           <div class="lesson-card">
             <strong>Ejercicio 1</strong>
-            <p>Dibuja 3 cuadrados que roten independientemente usando <code>push()</code> y <code>pop()</code> para cada uno.</p>
+            <p>Dibuja dos figuras iguales (mismo código de dibujo) en posiciones distintas. Cada una con su <code>push</code> → <code>translate</code> → dibujo → <code>pop</code>.</p>
           </div>
           <div class="lesson-card">
             <strong>Ejercicio 2</strong>
-            <p>Crea un sistema solar con planetas que orbiten a diferentes velocidades (usa push/pop anidados).</p>
+            <p>Dibuja un motivo (cuadrado o triángulo pequeño) y repítelo tres veces con traslación: tres bloques <code>push/pop</code> y tres <code>translate</code> distintos (sin bucles).</p>
           </div>
           <div class="lesson-card">
             <strong>Ejercicio 3</strong>
-            <p>Dibuja una flor con pétalos que roten alrededor del centro, cada uno con su propia rotación.</p>
+            <p>En el centro del lienzo, dibuja el mismo motivo en ángulo 0°, 60° y 120° con tres bloques <code>push</code> → <code>translate(width/2, height/2)</code> → <code>rotate</code> → dibujo → <code>pop</code>.</p>
           </div>
           <div class="lesson-card">
             <strong>Ejercicio 4</strong>
-            <p>Crea un brazo robótico con 3 segmentos que cada uno rote independientemente.</p>
+            <p>A la izquierda, una figura normal. A la derecha, la misma figura con simetría axial (<code>translate</code> al eje + <code>scale(-1, 1)</code>) dentro de su propio <code>push/pop</code>, sin afectar la figura de la izquierda.</p>
           </div>
           <div class="lesson-card">
             <strong>Ejercicio 5</strong>
-            <p>Crea un reloj con 3 agujas (horas, minutos, segundos) que roten independientemente usando <code>push()</code> y <code>pop()</code> para cada una.</p>
+            <p>En papel, observa tres capturas de sketches (tuyos o del profesor) e indica si muestran traslación, rotación, simetría axial, simetría central o ninguna de ellas.</p>
           </div>
         `
       }
